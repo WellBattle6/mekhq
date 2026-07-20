@@ -244,4 +244,32 @@ class CampaignMissionContractAccessorsTest {
         assertEquals(List.of(olderActive, newerActive, newerCompleted, olderCompleted),
               sortingCampaign.getSortedMissions());
     }
+
+    @Test
+    void getSortedMissionsUsesMissionDatesAndSortsUndatedCompletedMissionsLast() {
+        Campaign sortingCampaign = MHQTestUtilities.getTestCampaign();
+        sortingCampaign.setLocalDate(TODAY);
+        Contract currentActive = makeContract("Current Active", MissionStatus.ACTIVE,
+              TODAY.minusMonths(1), TODAY.plusMonths(1));
+        Mission undatedActive = new Mission("Undated Active");
+        Contract futureActive = makeContract("Future Active", MissionStatus.ACTIVE,
+              TODAY.plusMonths(1), TODAY.plusMonths(2));
+        Mission datedCompleted = new Mission("Dated Completed");
+        datedCompleted.setStatus(MissionStatus.FAILED);
+        datedCompleted.setStartDate(TODAY.minusMonths(3));
+        Contract olderCompleted = makeContract("Older Completed", MissionStatus.SUCCESS,
+              TODAY.minusMonths(6), TODAY.minusMonths(4));
+        Mission undatedCompleted = new Mission("Undated Completed");
+        undatedCompleted.setStatus(MissionStatus.SUCCESS);
+
+        sortingCampaign.addMission(undatedCompleted);
+        sortingCampaign.addMission(futureActive);
+        sortingCampaign.addMission(datedCompleted);
+        sortingCampaign.addMission(currentActive);
+        sortingCampaign.addMission(olderCompleted);
+        sortingCampaign.addMission(undatedActive);
+
+        assertEquals(List.of(currentActive, undatedActive, futureActive,
+                    datedCompleted, olderCompleted, undatedCompleted), sortingCampaign.getSortedMissions());
+    }
 }
