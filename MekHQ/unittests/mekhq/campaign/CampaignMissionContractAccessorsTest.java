@@ -223,4 +223,25 @@ class CampaignMissionContractAccessorsTest {
               "getMission must return the stored plain mission for its id");
         assertNull(campaign.getMission(999_999), "getMission must return null for an unknown id");
     }
+
+    @Test
+    void getSortedMissionsKeepsActiveContractsOldestFirstAndCompletedContractsMostRecentFirst() {
+        Campaign sortingCampaign = MHQTestUtilities.getTestCampaign();
+        Contract olderActive = makeContract("Older Active", MissionStatus.ACTIVE,
+              TODAY.minusYears(4), TODAY.plusMonths(2));
+        Contract newerActive = makeContract("Newer Active", MissionStatus.ACTIVE,
+              TODAY.minusYears(3), TODAY.plusMonths(4));
+        Contract olderCompleted = makeContract("Older Completed", MissionStatus.SUCCESS,
+              TODAY.minusYears(2), TODAY.minusYears(1));
+        Contract newerCompleted = makeContract("Newer Completed", MissionStatus.FAILED,
+              TODAY.minusMonths(6), TODAY.minusMonths(1));
+
+        sortingCampaign.addMission(olderCompleted);
+        sortingCampaign.addMission(newerActive);
+        sortingCampaign.addMission(olderActive);
+        sortingCampaign.addMission(newerCompleted);
+
+        assertEquals(List.of(olderActive, newerActive, newerCompleted, olderCompleted),
+              sortingCampaign.getSortedMissions());
+    }
 }
