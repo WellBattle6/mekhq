@@ -294,6 +294,7 @@ public class CampaignOptionsMarshaller {
               indent,
               "useTwistOfFateSurvival",
               campaignOptions.isUseTwistOfFateSurvival());
+        MHQXMLUtility.writeSimpleXMLTag(pw, indent, "useFoundersHaveEdge", campaignOptions.isUseFoundersHaveEdge());
         MHQXMLUtility.writeSimpleXMLTag(pw, indent, "useImplants", campaignOptions.isUseImplants());
         MHQXMLUtility.writeSimpleXMLTag(pw,
               indent,

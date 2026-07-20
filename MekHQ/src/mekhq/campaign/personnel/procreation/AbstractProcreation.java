@@ -78,6 +78,7 @@ import mekhq.campaign.personnel.lifeEvents.BirthAnnouncement;
 import mekhq.campaign.personnel.medical.advancedMedical.InjuryTypes;
 import mekhq.campaign.personnel.medical.advancedMedicalAlternate.AdvancedMedicalAlternate;
 import mekhq.campaign.personnel.medical.advancedMedicalAlternate.AlternateInjuries;
+import mekhq.campaign.personnel.skills.enums.SkillAttribute;
 import mekhq.campaign.randomEvents.prisoners.PrisonerStatus;
 import mekhq.campaign.universe.Faction;
 import mekhq.campaign.universe.Planet;
@@ -471,6 +472,11 @@ public abstract class AbstractProcreation {
                 baby.setFounder(true);
             } else if (campaignOptions.isAssignChildrenOfFoundersFounderTag()) {
                 baby.setFounder(baby.getGenealogy().getParents().stream().anyMatch(Person::isFounder));
+            }
+
+            boolean useFoundersHaveEdge = campaignOptions.isUseFoundersHaveEdge();
+            if (baby.isFounder() && useFoundersHaveEdge) {
+                baby.changeAttributeScore(SkillAttribute.EDGE, 1);
             }
 
             // set education

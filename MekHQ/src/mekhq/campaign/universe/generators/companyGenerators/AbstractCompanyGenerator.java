@@ -86,6 +86,7 @@ import mekhq.campaign.personnel.generator.AbstractPersonnelGenerator;
 import mekhq.campaign.personnel.ranks.Rank;
 import mekhq.campaign.personnel.skills.Skill;
 import mekhq.campaign.personnel.skills.SkillType;
+import mekhq.campaign.personnel.skills.enums.SkillAttribute;
 import mekhq.campaign.unit.Unit;
 import mekhq.campaign.universe.Faction;
 import mekhq.campaign.universe.companyGeneration.AtBRandomMekParameters;
@@ -705,9 +706,18 @@ public abstract class AbstractCompanyGenerator {
      */
     private void finalizePersonnel(final Campaign campaign,
           final List<CompanyGenerationPersonTracker> trackers) {
+        boolean useFoundersHaveEdge = campaign.getCampaignOptions().isUseFoundersHaveEdge();
+
         // Assign the founder flag if we need to
         if (getOptions().isAssignFounderFlag()) {
-            trackers.forEach(tracker -> tracker.getPerson().setFounder(true));
+            for (final CompanyGenerationPersonTracker tracker : trackers) {
+                Person person = tracker.getPerson();
+                person.setFounder(true);
+
+                if (useFoundersHaveEdge) {
+                    person.changeAttributeScore(SkillAttribute.EDGE, 1);
+                }
+            }
         }
 
         // Recruit all the personnel, GM-style so that the initial hiring cost is

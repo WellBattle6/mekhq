@@ -343,6 +343,7 @@ public class CampaignOptionsUnmarshaller {
                   campaignOptions.setEdgeRefreshPeriod(EdgeRefreshPeriod.fromString(nodeContents));
             case "useEdge" -> campaignOptions.setUseEdge(parseBoolean(nodeContents));
             case "useTwistOfFateSurvival" -> campaignOptions.setUseTwistOfFateSurvival(parseBoolean(nodeContents));
+            case "useFoundersHaveEdge" -> campaignOptions.setUseFoundersHaveEdge(parseBoolean(nodeContents));
             case "useImplants" -> campaignOptions.setUseImplants(parseBoolean(nodeContents));
             case "alternativeQualityAveraging" -> campaignOptions.setAlternativeQualityAveraging(parseBoolean(
                   nodeContents));

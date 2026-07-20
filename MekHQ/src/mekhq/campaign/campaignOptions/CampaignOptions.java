@@ -242,6 +242,7 @@ public class CampaignOptions {
     private EdgeRefreshPeriod edgeRefreshPeriod;
     private boolean useEdge;
     private boolean useTwistOfFateSurvival;
+    private boolean useFoundersHaveEdge;
     private boolean useImplants;
     private boolean alternativeQualityAveraging;
     private boolean useAgeEffects;
@@ -867,6 +868,7 @@ public class CampaignOptions {
         setOnlyCommandersMatterBattleArmor(false);
         setUseEdge(false);
         setUseTwistOfFateSurvival(false);
+        setUseFoundersHaveEdge(false);
         setUseImplants(false);
         setAlternativeQualityAveraging(false);
         setUseAgeEffects(false);
@@ -1752,6 +1754,14 @@ public class CampaignOptions {
 
     public void setUseTwistOfFateSurvival(final boolean useTwistOfFateSurvival) {
         this.useTwistOfFateSurvival = useTwistOfFateSurvival;
+    }
+
+    public boolean isUseFoundersHaveEdge() {
+        return useFoundersHaveEdge;
+    }
+
+    public void setUseFoundersHaveEdge(final boolean useFoundersHaveEdge) {
+        this.useFoundersHaveEdge = useFoundersHaveEdge;
     }
 
     public boolean isUseImplants() {
