@@ -270,6 +270,7 @@ class CampaignMissionContractAccessorsTest {
         sortingCampaign.addMission(undatedActive);
 
         assertEquals(List.of(currentActive, undatedActive, futureActive,
-                    datedCompleted, olderCompleted, undatedCompleted), sortingCampaign.getSortedMissions());
+              datedCompleted, olderCompleted, undatedCompleted),
+              sortingCampaign.getSortedMissions());
     }
 }
