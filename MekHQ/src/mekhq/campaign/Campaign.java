@@ -1362,16 +1362,17 @@ public class Campaign implements ITechManager {
     public List<Mission> getSortedMissions() {
         List<Mission> sortedMissions = new ArrayList<>(getMissions());
         sortedMissions.sort(Comparator.comparing((Mission mission) -> mission.getStatus().isCompleted())
-                                  .thenComparingLong(mission -> {
-                                      LocalDate startDate = mission.getStartDate();
-                                      if (startDate == null) {
-                                          return mission.getStatus().isCompleted() ?
-                                                       Long.MAX_VALUE : getLocalDate().toEpochDay();
-                                      }
-                                      long startDay = startDate.toEpochDay();
-                                      return mission.getStatus().isCompleted() ? -startDay : startDay;
-                                  }));
+                                  .thenComparingLong(this::getMissionSortKey));
         return sortedMissions;
+    }
+
+    private long getMissionSortKey(Mission mission) {
+        LocalDate startDate = mission.getStartDate();
+        if (startDate == null) {
+            return mission.getStatus().isCompleted() ? Long.MAX_VALUE : getLocalDate().toEpochDay();
+        }
+        long startDay = startDate.toEpochDay();
+        return mission.getStatus().isCompleted() ? -startDay : startDay;
     }
 
     public List<Mission> getActiveMissions(final boolean excludeEndDateCheck) {
