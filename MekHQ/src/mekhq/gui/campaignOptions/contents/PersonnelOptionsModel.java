@@ -36,6 +36,7 @@ import static mekhq.campaign.randomEvents.prisoners.PrisonerEventManager.DEFAULT
 
 import jakarta.annotation.Nonnull;
 import mekhq.campaign.Campaign;
+import mekhq.campaign.campaignOptions.CampaignOption;
 import mekhq.campaign.campaignOptions.CampaignOptions;
 import mekhq.campaign.personnel.enums.AwardBonus;
 import mekhq.campaign.personnel.enums.EdgeRefreshPeriod;
@@ -55,7 +56,7 @@ class PersonnelOptionsModel {
     boolean onlyCommandersMatterBattleArmor;
     boolean useEdge;
     boolean useTwistOfFateSurvival;
-    boolean useFoundersHaveEdge;
+    boolean useFoundersHavePlotArmor;
     EdgeRefreshPeriod edgeRefreshPeriod;
     int edgeRefreshCost;
     boolean useImplants;
@@ -148,7 +149,7 @@ class PersonnelOptionsModel {
         onlyCommandersMatterBattleArmor = options.isOnlyCommandersMatterBattleArmor();
         useEdge = options.isUseEdge();
         useTwistOfFateSurvival = options.isUseTwistOfFateSurvival();
-        useFoundersHaveEdge = options.isUseFoundersHaveEdge();
+        useFoundersHavePlotArmor = options.get(CampaignOption.USE_FOUNDER_PLOT_ARMOR);
         edgeRefreshPeriod = options.getEdgeRefreshPeriod();
         edgeRefreshCost = options.getEdgeRefreshCost();
         useImplants = options.isUseImplants();
@@ -242,7 +243,7 @@ class PersonnelOptionsModel {
         options.setOnlyCommandersMatterBattleArmor(onlyCommandersMatterBattleArmor);
         options.setUseEdge(useEdge);
         options.setUseTwistOfFateSurvival(useTwistOfFateSurvival);
-        options.setUseFoundersHaveEdge(useFoundersHaveEdge);
+        options.set(CampaignOption.USE_FOUNDER_PLOT_ARMOR, useFoundersHavePlotArmor);
         options.setEdgeRefreshPeriod(edgeRefreshPeriod);
         options.setEdgeRefreshCost(edgeRefreshCost);
         options.setUseImplants(useImplants);

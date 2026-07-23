@@ -61,6 +61,7 @@ import mekhq.MHQConstants;
 import mekhq.campaign.Campaign;
 import mekhq.campaign.ExtraData.IntKey;
 import mekhq.campaign.ExtraData.StringKey;
+import mekhq.campaign.campaignOptions.CampaignOption;
 import mekhq.campaign.campaignOptions.CampaignOptions;
 import mekhq.campaign.log.MedicalLogger;
 import mekhq.campaign.log.PersonalLogger;
@@ -432,6 +433,8 @@ public abstract class AbstractProcreation {
         if (father != null) {
             activeInjuryTypes.addAll(father.getActiveInjuryTypes());
         }
+
+        final boolean useFoundersHavePlotArmor = campaignOptions.get(CampaignOption.USE_FOUNDER_PLOT_ARMOR);
         for (int i = 0; i < size; i++) {
             // Create a baby
             Faction originFaction = mother.getOriginFaction();
@@ -474,8 +477,7 @@ public abstract class AbstractProcreation {
                 baby.setFounder(baby.getGenealogy().getParents().stream().anyMatch(Person::isFounder));
             }
 
-            boolean useFoundersHaveEdge = campaignOptions.isUseFoundersHaveEdge();
-            if (baby.isFounder() && useFoundersHaveEdge) {
+            if (baby.isFounder() && useFoundersHavePlotArmor) {
                 baby.changeAttributeScore(SkillAttribute.EDGE, 1);
             }
 
